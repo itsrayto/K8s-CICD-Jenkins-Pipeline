@@ -87,33 +87,33 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube
 ## Generic Setup
 
 - Create a directory  where you would like to clone this repo to:
-```bash
-cd /path/to/create/dir
-mkdir <name>
-```
+    ```bash
+    cd /path/to/create/dir
+    mkdir <name>
+    ```
 
 - Clone the repo:
-```bash
-git clone https://github.com/itsrayto/Elta-home-assignment.git
-```
+    ```bash
+    git clone https://github.com/itsrayto/Elta-home-assignment.git
+    ```
 
 
 ## Set up a Minikube k8s cluster
 
 - From a terminal with admin access, run:
-```bash
-minikube start
-```
+    ```bash
+    minikube start
+    ```
 
 - You should see your minikube cluster running as a container, check it with:
-```bash
-docker ps
-```
+    ```bash
+    docker ps
+    ```
 
 - Now you can use kubectl to access the cluster.
-```bash
-kubectl get pods -A
-```     
+    ```bash
+    kubectl get pods -A
+    ```     
 
 
 
@@ -121,15 +121,17 @@ kubectl get pods -A
     you will use the Minikube ip and the corresponding node port.
 
 - Run this to get the ip:
-```bash
-minikube ip
-```
+    ```bash
+    minikube ip
+    ```
 
 - We should also enable the NGINX Ingress controller for the web app.
+
     ```bash
     minikube addons enable ingress
     ```
     - Verify that the NGINX Ingress controller is running:
+
         ```bash
         kubectl get pods -n ingress-nginx
         ```
@@ -139,37 +141,37 @@ minikube ip
 
 - We will create 2 folders inside the Minikube container that the servers will use as storage:   
 
-```bash
-docker exec -it minikube bash
+    ```bash
+    docker exec -it minikube bash
 
-# inside the Minikube container:
-cd /
+    # inside the Minikube container:
+    cd /
 
-cd home/
-mkdir gitlab
-cd gitlab/
-mkdir data
+    cd home/
+    mkdir gitlab
+    cd gitlab/
+    mkdir data
 
-cd /
+    cd /
 
-cd home/
-mkdir jenkins
-cd jenkins/
-mkdir data
-```
+    cd home/
+    mkdir jenkins
+    cd jenkins/
+    mkdir data
+    ```
 
 
 ## Set up the GitLab server
 
 - Go to the 'gitlab' folder from this repo and apply the 'gitlab' namespace:
-```bash
-kubectl apply -f namespace.yaml
-```
+    ```bash
+    kubectl apply -f namespace.yaml
+    ```
 
 - Then go to the 'gitlab-chart' folder and install the chart in the 'gitlab' ns:
-```bash
-helm install gitlab . -n gitlab --values values.yaml
-```
+    ```bash
+    helm install gitlab . -n gitlab --values values.yaml
+    ```
 
 - Access the GitLab server through http://192.168.49.2:30100/ (minikube-ip:node-port)
 - The username is: root  
@@ -191,23 +193,23 @@ helm install gitlab . -n gitlab --values values.yaml
 ## Set up the Jenkins server
 
 - Go to the 'jenkins' folder from this repo and apply the 'devops' namespace
-```bash
-kubectl apply -f namespace.yaml
-```
+    ```bash
+    kubectl apply -f namespace.yaml
+    ```
 
 - Then go to the 'jenkins-chart' folder and install the chart in the 'devops' ns
-```bash
-helm install jenkins . -n devops --values values.yaml
-```
+    ```bash
+    helm install jenkins . -n devops --values values.yaml
+    ```
 
 - Access the Jenkins server through http://192.168.49.2:30200/ (minikube-ip:node-port)
 
 - You will be asked to Unlock Jenkins with the initialAdminPassword.  
     to get it run the following:
-```bash
-kubectl get pods -n devops
-kubectl exec -it <jenkins-pod> -n devops -- cat /var/jenkins_home/secrets/initialAdminPassword
-```
+    ```bash
+    kubectl get pods -n devops
+    kubectl exec -it <jenkins-pod> -n devops -- cat /var/jenkins_home/secrets/initialAdminPassword
+    ```
  
 - We will install the suggested plugins and add what we need later.
 
@@ -234,11 +236,11 @@ kubectl exec -it <jenkins-pod> -n devops -- cat /var/jenkins_home/secrets/initia
 
     - Install the Jenkins Kuberentes Plugin.
 
-    ![alt text](https://i.imgur.com/UBBd35z.png)
+        ![alt text](https://i.imgur.com/UBBd35z.png)
 
-    ![alt test](https://i.imgur.com/AlppaNC.png)
+        ![alt test](https://i.imgur.com/AlppaNC.png)
 
-    ![alt text](https://i.imgur.com/WTRtvZB.png)
+        ![alt text](https://i.imgur.com/WTRtvZB.png)
 
 - Next, we create a Kuberenetes Cloud Configuration:
     - Once the plugin is installed,  
@@ -253,7 +255,7 @@ kubectl exec -it <jenkins-pod> -n devops -- cat /var/jenkins_home/secrets/initia
         Since we have Jenkins inside the Kubernetes cluster with a service account to deploy the agent pods, we don’t have to mention the Kubernetes URL or certificate key.\
         However, to validate the connection using the service account, use the Test connection button as shown below. It should show a connected message if the Jenkins pod can connect to the Kubernetes master API.
 
-    ![alt text](https://i.imgur.com/3STTYAA.png)
+        ![alt text](https://i.imgur.com/3STTYAA.png)
 
 
     - For Jenkins master running inside the cluster, you can use the Service endpoint of the Kubernetes cluster as the Jenkins URL because agents pods can connect to the cluster via internal service DNS.
@@ -344,9 +346,16 @@ kubectl exec -it <jenkins-pod> -n devops -- cat /var/jenkins_home/secrets/initia
 #### Upload the needed files from this repo to our GitLab project
 
 - Clone the GitLab project:
-```bash
-git clone http://192.168.49.2:30100/gitlab-instance-66f47545/web-app.git
-```
+    ```bash
+    git clone http://192.168.49.2:30100/gitlab-instance-66f47545/web-app.git
+    ```
+
+- We should change to the correct 'user@ip' and <path/to/webapp-chart> in our Jenkinsfile before copying and uploading it to GitLab:
+    - To find your ip run:
+
+        ```bash
+        ifconfig
+        ```
 
 - Copy the contents of 'gitlab-repo' from this repo to the folder of that clone.
 
@@ -391,11 +400,11 @@ git clone http://192.168.49.2:30100/gitlab-instance-66f47545/web-app.git
         useername: root\
         password: the personal access token from before
 
-    ![alt text](https://i.imgur.com/yFHW9gB.png)
+        ![alt text](https://i.imgur.com/yFHW9gB.png)
 
-    ![alt text](https://i.imgur.com/OQwNOXt.png)
+        ![alt text](https://i.imgur.com/OQwNOXt.png)
 
-    ![alt text](https://i.imgur.com/dlqLKev.png)
+        ![alt text](https://i.imgur.com/dlqLKev.png)
 
 
 ---
@@ -430,7 +439,7 @@ git clone http://192.168.49.2:30100/gitlab-instance-66f47545/web-app.git
         The reason is that the Jenkins URL points to the same IP address which GitLab is using(Minikube setup).  
         Such webhooks are forbidden by default and can be enabled in the GitLab settings Admin → Settings → Network → Outbound Requests → Allow requests to the local network from hooks and services
 
-    ![alt text](https://i.imgur.com/Ksv99nB.png)
+        ![alt text](https://i.imgur.com/Ksv99nB.png)
 
     - After you check this box  
         you will get 'Connection successful' when trying to Test Settings.
@@ -442,15 +451,11 @@ git clone http://192.168.49.2:30100/gitlab-instance-66f47545/web-app.git
 
 - First, let's create a 'production' namespace for our web app to run on:
     - Go to the 'webapp-prod' folder from this repo and apply the 'production' namespace
+
         ```bash
             kubectl apply -f namespace.yaml
         ```
 
-- We should also change to the correct 'user'@'ip' and <path/to/webapp-chart> in our Jenkinsfile:
-    - To find your ip run:
-        ```bash
-        ifconfig
-        ```
 
 - After that, let's connect to our DockerHub account and set up an Access Token to push/pull the image during our Jenkins pipeline.
 
@@ -459,7 +464,7 @@ git clone http://192.168.49.2:30100/gitlab-instance-66f47545/web-app.git
         - Go to Security > New Access Token.
         - Fill the details:
 
-        ![alt text](https://i.imgur.com/d8CWv4k.png)
+            ![alt text](https://i.imgur.com/d8CWv4k.png)
 
         - Copy the Access Token and save it
         
@@ -467,31 +472,31 @@ git clone http://192.168.49.2:30100/gitlab-instance-66f47545/web-app.git
 - Then go to your machine, and create a secret in 2 namespaces:  
     - The devops namespace - to let the Jenkins agent push into the DockerHub private repo with Kaniko.
 
-    ```bash
-    kubectl create secret docker-registry docker-credentials --docker-username=<your-docker-username> --docker-password=<your-docker-access-token> --namespace devops
-    ```
+        ```bash
+        kubectl create secret docker-registry docker-credentials --docker-username=<your-docker-username> --docker-password=<your-docker-access-token> --namespace devops
+        ```
 
     - The production namespace - so the web app production pod can pull the image from DockerHub.
 
-    ```bash
-    kubectl create secret docker-registry docker-credentials --docker-username=<your-docker-username> --docker-password=<your-docker-access-token> --namespace production
-    ```
+        ```bash
+        kubectl create secret docker-registry docker-credentials --docker-username=<your-docker-username> --docker-password=<your-docker-access-token> --namespace production
+        ```
 
 - Now let's take care of the deployment, we will need to set up an SSH Agent plugin on Jenkins.
     - On the Jenkins server, select Manage Jenkins > Manage Plugins.
 
     - Install the Jenkins SSH Agent Plugin.
     
-    ![alt text](https://i.imgur.com/bSUqyNY.png)
+        ![alt text](https://i.imgur.com/bSUqyNY.png)
 
-    ![alt test](https://i.imgur.com/AlppaNC.png)
+        ![alt test](https://i.imgur.com/AlppaNC.png)
 
-    ![alt text](https://i.imgur.com/WTRtvZB.png)
+        ![alt text](https://i.imgur.com/WTRtvZB.png)
 
     - On your machine, run the following command to generate an SSH key:
-    ```bash
-    ssh-keygen -t rsa 
-    ```
+        ```bash
+        ssh-keygen -t rsa 
+        ```
     - Now you got a private and a public key
         - The public key - by default is located in '~/.ssh/id_rsa.pub'.  
             you should put it in your machine's 'authorized_keys' file (found in  ~/.ssh/authorized_keys. create a new one if it doesn't exist).
@@ -508,11 +513,11 @@ git clone http://192.168.49.2:30100/gitlab-instance-66f47545/web-app.git
 
             - On the right click on Add Credenetials
 
-            ![alt text](https://i.imgur.com/uEuqMY6.png)
+                ![alt text](https://i.imgur.com/uEuqMY6.png)
 
             - Copy the contects of the private key file to the Key field here
 
-            ![alt text](https://i.imgur.com/cl0I9mb.png)
+                ![alt text](https://i.imgur.com/cl0I9mb.png)
             
             - And done!
 
@@ -530,7 +535,7 @@ git clone http://192.168.49.2:30100/gitlab-instance-66f47545/web-app.git
 - That's it, now when we push to the GitLab project or build the project on Jenkins,   
         the webapp should be deployed through the Helm Chart and we'll be able to access it through:   
 
-    **_the-legend.info_**
+   **_the-legend.info_**
 
 
 ## Notes
