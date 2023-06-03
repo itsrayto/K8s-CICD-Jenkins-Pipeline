@@ -30,10 +30,6 @@ It includes Helm Charts for GitLab, Jenkins, and an ASP.NET Core web application
 
 - [Troubleshooting](#troubleshooting)
 
-- [References](#references)
-
-- [AWS EC2 Instance setup](#aws-ec2-Instance-setup)
-
 
 ## Prerequisites
 
