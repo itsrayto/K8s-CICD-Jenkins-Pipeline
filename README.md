@@ -441,7 +441,7 @@ git clone http://192.168.49.2:30100/gitlab-instance-66f47545/web-app.git
             kubectl apply -f namespace.yaml
         ```
 
-- We should also change to the correct <user>@<ip> in our Jenkinsfile:
+- We should also change to the correct <user>@<ip> and <path/to/webapp-chart> in our Jenkinsfile:
     - To find your ip run:
     ```bash
     ifconfig
