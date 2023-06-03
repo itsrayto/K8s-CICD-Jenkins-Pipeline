@@ -24,7 +24,7 @@ It includes Helm Charts for GitLab, Jenkins, and an ASP.NET Core web application
 
 - [Configuration for GitLab and Jenkins](#configuration-for-gitlab-and-jenkins)
 
-- [Configuration for a ASP.NET Core web app deployment](#configuration-for-a-asp.net-core-web-app-deployment)
+- [Configuration for a ASP.NET Core web app deployment](#configuration-for-a-asp-net-core-web-app-deployment)
 
 - [Notes](#notes)
 
@@ -438,7 +438,7 @@ git clone http://192.168.49.2:30100/gitlab-instance-66f47545/web-app.git
 - Select Save changes.
 
 
-## Configuration for a ASP.NET Core web app deployment
+## Configuration for a ASP NET Core web app deployment
 
 - First, let's create a 'production' namespace for our web app to run on:
     - Go to the 'webapp-prod' folder from this repo and apply the 'production' namespace
