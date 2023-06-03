@@ -54,11 +54,11 @@ podTemplate(yaml: '''
 
                 if (isInstalled == '1') {
                     // Upgrade the Helm chart
-                    sh "ssh -o StrictHostKeyChecking=no <user>@<ip> 'cd /home/rach/home_task/prod/prod-chart \
+                    sh "ssh -o StrictHostKeyChecking=no <user>@<ip> 'cd <path/to/webapp-chart> \
                         && helm upgrade ${releaseName} . -n ${namespace} --values values.yaml'"
                 } else {
                     // Install the Helm chart
-                    sh "ssh -o StrictHostKeyChecking=no <user>@<ip> 'cd /home/rach/home_task/prod/prod-chart \
+                    sh "ssh -o StrictHostKeyChecking=no <user>@<ip> 'cd <path/to/webapp-chart> \
                         && helm install ${releaseName} . -n ${namespace} --values values.yaml'"
                 }
             }
