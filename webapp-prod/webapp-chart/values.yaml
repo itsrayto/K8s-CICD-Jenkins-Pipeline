@@ -1,0 +1,16 @@
+replicaCount: 2
+
+namespace: production
+
+label:
+  app: web
+
+image:
+  name: rayto991/app-repo
+  tag: latest
+
+service:
+  name: webapp-service
+  port: 80
+  targetPort: 80
+  type: ClusterIP

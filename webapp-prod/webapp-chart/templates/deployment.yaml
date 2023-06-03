@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.label.app }}-deployment # name of the Deployment
+  namespace: {{ .Values.namespace }}
+  labels:
+    app: {{ .Values.label.app }}-app
+spec:
+  replicas: {{ .Values.replicaCount }}
+  strategy: 
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 1
+    type: RollingUpdate
+  selector: # how the Deployment object will select Pods to manage
+    matchLabels: # the Deployment object will select Pods that have the labels:
+      app: {{ .Values.label.app }}-app
+  template: # the template that will be used to create Pods
+    metadata:
+      labels: # Specifies the Pod labels
+        app: {{ .Values.label.app }}-app
+    spec: # Pod's configuration
+      imagePullSecrets:
+        - name: docker-credentials
+      containers:
+        - name: {{ .Values.label.app }}-container
+          image: {{ .Values.image.name }}:{{ .Values.image.tag }}
+          ports: # information (only) about the network connections a container uses
+            - name: http
+              containerPort: 80
+              protocol: TCP
