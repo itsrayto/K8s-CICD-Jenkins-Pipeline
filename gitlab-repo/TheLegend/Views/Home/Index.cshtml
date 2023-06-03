@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <img class="image-responsive"
+    src="https://pa1.narvii.com/6219/802adbabb2d34e750d549f0596a089844f3cead4_00.gif"
+    height="200em">
+    <p>The time is @DateTime.Now</p>
+    <p>Find link</p>
+</div>
+
+
+<div id="the legend of" style="display: none;">
+    <div class="text-center"><a href="https://diablo.fandom.com/wiki/Champion%27s_Tunic">Champion's Tunic</a></p>
+  <img src="https://nintendosoup.com/wp-content/uploads/2018/08/diablo-iii-eternal-collection-link-outfit-with-ewatermark-1-1280x720.jpg" alt="diablo">
+</div>
+
+
+<script>
+    document.addEventListener('keydown', function(event) {
+  // Check if the secret key combination is pressed (e.g., Shift + Z)
+    if (event.shiftKey && event.key === 'Z') {
+    handleEasterEggTrigger();
+  }
+});
+    function handleEasterEggTrigger() {
+  // Show the Easter egg
+  document.getElementById('the legend of').style.display = 'block';
+}
+</script>

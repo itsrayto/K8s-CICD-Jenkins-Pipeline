@@ -1,0 +1,71 @@
+podTemplate(yaml: '''
+    apiVersion: v1
+    kind: Pod
+    spec:
+      containers:
+      - name: kaniko
+        image: gcr.io/kaniko-project/executor:v1.6.0-debug
+        imagePullPolicy: Always
+        command:
+        - sleep
+        args:
+        - 9999999
+        volumeMounts:
+          - name: jenkins-docker-cfg
+            mountPath: /kaniko/.docker
+      volumes:
+      - name: jenkins-docker-cfg
+        projected:
+          sources:
+          - secret:
+              name: docker-credentials
+              items:
+                - key: .dockerconfigjson
+                  path: config.json
+''')
+{
+  node(POD_LABEL) {
+    stage('Clone') {
+            container('kaniko') {
+                // Clone the ASP.NET Core web app project from Git repository
+                checkout scm
+            }
+        }
+      
+    stage('Build Docker image') {
+            container(name: 'kaniko', shell: '/busybox/sh') {
+              // The Kaniko executor builds, tags and pushes the image in one command
+              sh '''#!/busybox/sh
+                /kaniko/executor --context `pwd` --destination rayto991/app-repo:latest
+                /kaniko/executor --context `pwd` --destination rayto991/app-repo:$BUILD_NUMBER
+              '''
+            }
+    }
+
+    stage('Deploy') {
+        container('jnlp') {
+          sshagent(credentials: ['ssh-connect-to-machine']) {
+              script {
+                  def releaseName = 'webapp-prod'
+                  def namespace = 'production'
+
+                // Check if the Helm chart is already installed
+                def isInstalled = sh(returnStdout: true, script: "ssh -o StrictHostKeyChecking=no <user>@<ip> 'helm ls -n ${namespace} | grep ${releaseName} | wc -l'").trim()
+
+                if (isInstalled == '1') {
+                    // Upgrade the Helm chart
+                    sh "ssh -o StrictHostKeyChecking=no <user>@<ip> 'cd /home/rach/home_task/prod/prod-chart \
+                        && helm upgrade ${releaseName} . -n ${namespace} --values values.yaml'"
+                } else {
+                    // Install the Helm chart
+                    sh "ssh -o StrictHostKeyChecking=no <user>@<ip> 'cd /home/rach/home_task/prod/prod-chart \
+                        && helm install ${releaseName} . -n ${namespace} --values values.yaml'"
+                }
+            }
+          }
+        }
+    }
+  }
+}
+
+
