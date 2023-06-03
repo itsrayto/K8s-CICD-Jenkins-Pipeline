@@ -1,0 +1,16 @@
+replicaCount: 1
+
+namespace: devops
+
+label:
+  jenkins: jenkins
+
+image:
+  name: jenkins/jenkins
+  tag: 2.401.1
+
+service:
+  name: jenkins-service
+  port: 8080
+  targetPort: 8080
+  type: NodePort
