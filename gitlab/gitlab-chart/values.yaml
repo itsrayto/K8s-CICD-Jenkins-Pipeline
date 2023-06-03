@@ -1,0 +1,19 @@
+replicaCount: 1
+
+namespace: gitlab
+
+label:
+  gitlab: gitlab
+
+gitlab_server:
+  init_password: git1test23
+
+image:
+  name: gitlab/gitlab-ce
+  tag: 15.11.5-ce.0
+
+service:
+  name: gitlab-service
+  port: 80
+  targetPort: 80
+  type: NodePort
