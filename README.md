@@ -6,6 +6,11 @@ and a Jenkins pipeline to build and deploy the web app.
 It includes Helm Charts for GitLab, Jenkins, and an ASP.NET Core web application.
 
 
+| Jenkins + Helm + K8s                            | .NET Core                            |
+| ----------------------------------- | ----------------------------------- |
+| ![cat](https://i.imgur.com/PZ24mXr.png) | ![dog](https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/.NET_Core_Logo.svg/128px-.NET_Core_Logo.svg.png) |
+
+
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
