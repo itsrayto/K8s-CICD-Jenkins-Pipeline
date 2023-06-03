@@ -48,6 +48,16 @@ Git - [link](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 sudo apt install git
 ```
 
+cURL - [link](https://everything.curl.dev/get)
+```bash
+sudo apt install curl
+```
+
+OpenSSH - [link](https://www.cyberciti.biz/faq/ubuntu-linux-install-openssh-server/)
+```bash
+sudo apt install openssh-server
+```
+
 Docker - [link](https://docs.docker.com/engine/install/)
 ```bash
 sudo apt install docker.io
@@ -71,16 +81,6 @@ Minikube - [link](https://minikube.sigs.k8s.io/docs/start/)
 ```bash
 sudo curl -LO https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
 sudo install minikube-linux-amd64 /usr/local/bin/minikube
-```
-
-cURL - [link](https://everything.curl.dev/get)
-```bash
-sudo apt install curl
-```
-
-OpenSSH - [link](https://www.cyberciti.biz/faq/ubuntu-linux-install-openssh-server/)
-```bash
-sudo apt install openssh-server
 ```
 
 
