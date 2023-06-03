@@ -178,6 +178,7 @@ helm install gitlab . -n gitlab --values values.yaml
 
 
 - Create a new project
+
     ![alt text](https://i.imgur.com/kWEemDL.png)
 
     ![alt text](https://i.imgur.com/mgwC1tN.png)
@@ -209,12 +210,15 @@ kubectl exec -it <jenkins-pod> -n devops -- cat /var/jenkins_home/secrets/initia
 ```
  
 - We will install the suggested plugins and add what we need later.
+
     ![alt text](https://i.imgur.com/cDQl7iB.png)
 
 - Create your Admin user
+
     ![alt text](https://i.imgur.com/o4rSufc.png)
 
 - In the Instance Configuration leave it as the default
+
     ![alt text](https://i.imgur.com/a45pRDi.png)
 
 - Jenkins should be ready now!
@@ -311,6 +315,7 @@ kubectl exec -it <jenkins-pod> -n devops -- cat /var/jenkins_home/secrets/initia
 - On the Jenkins server, select Manage Jenkins > Manage Plugins.
 
 - Install the Jenkins GitLab Plugin.
+
     ![alt text](https://i.imgur.com/Yqu0qM6.png)
 
     ![alt test](https://i.imgur.com/AlppaNC.png)
@@ -441,11 +446,11 @@ git clone http://192.168.49.2:30100/gitlab-instance-66f47545/web-app.git
             kubectl apply -f namespace.yaml
         ```
 
-- We should also change to the correct <user>\@<ip> and <path/to/webapp-chart> in our Jenkinsfile:
+- We should also change to the correct <user>, <ip> and <path/to/webapp-chart> in our Jenkinsfile:
     - To find your ip run:
-    ```bash
-    ifconfig
-    ```
+        ```bash
+        ifconfig
+        ```
 
 - After that, let's connect to our DockerHub account and set up an Access Token to push/pull the image during our Jenkins pipeline.
 
@@ -453,7 +458,9 @@ git clone http://192.168.49.2:30100/gitlab-instance-66f47545/web-app.git
         - Go to top right > click username > Account Settings  .
         - Go to Security > New Access Token.
         - Fill the details:
+
         ![alt text](https://i.imgur.com/d8CWv4k.png)
+
         - Copy the Access Token and save it
         
 
