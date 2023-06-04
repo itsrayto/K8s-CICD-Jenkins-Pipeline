@@ -65,6 +65,7 @@ sudo apt install openssh-server
 
 Docker - [link](https://docs.docker.com/engine/install/)
 ```bash
+sudo apt update
 sudo apt install docker.io
 sudo usermod -a -G docker ${USER}
 newgrp docker
@@ -178,10 +179,9 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube
     helm install gitlab . -n gitlab --values values.yaml
     ```
 
-- Access the GitLab server through http://192.168.49.2:30100/ (minikube-ip:node-port)
+- Access the GitLab server through http://192.168.49.2:30100/ (minikube-ip:node-port)  
 - The username is: root  
     The password is: git1test23 (as defined in the chart)  
-   
 
 
 - Create a new project
@@ -207,7 +207,8 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube
     helm install jenkins . -n devops --values values.yaml
     ```
 
-- Access the Jenkins server through http://192.168.49.2:30200/ (minikube-ip:node-port)
+- Access the Jenkins server through http://192.168.49.2:30200/ (minikube-ip:node-port)   
+
 
 - You will be asked to Unlock Jenkins with the initialAdminPassword.  
     to get it run the following:
