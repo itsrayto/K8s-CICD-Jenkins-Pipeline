@@ -359,7 +359,7 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube
     - To find your ip run:
 
         ```bash
-        ifconfig
+        ip address show
         ```
 
 - Copy the contents of 'gitlab-repo' from this repo to the folder of that clone.
@@ -586,3 +586,4 @@ As you can see, all the image-building operations happen inside the Kaniko conta
 
 - Agent doesnt work - https://github.com/jenkinsci/docker-inbound-agent/issues/146
 
+- jnlp ports - https://stackoverflow.com/questions/60455410/jenkins-kubernetes-plugin-provided-port50000-is-not-reachable
